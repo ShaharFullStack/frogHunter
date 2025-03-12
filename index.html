@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adventure World Game</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #000;
+      }
+
+      #container {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      #message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        z-index: 100;
+        user-select: none;
+      }
+
+      #crosshair {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        border: 2px solid white;
+        border-radius: 50%;
+        box-sizing: border-box;
+        pointer-events: none;
+        z-index: 100;
+        display: none;
+      }
+
+      #ui-container {
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <div id="message">Loading...</div>
+    <div id="crosshair"></div>
+
+    <!-- Import Three.js and related libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/libs/stats.min.js"></script>
+    
+    <!-- Add the missing fflate dependency for FBXLoader -->
+    <script src="https://cdn.jsdelivr.net/npm/fflate@0.7.4/umd/index.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/FirstPersonControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/math/ImprovedNoise.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/PointerLockControls.js"></script>4
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/objects/Water.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/objects/Sky.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/FBXLoader.js"></script>
+
+    <!-- Import game files in the correct order -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/environment.js"></script>
+    <script src="js/objects.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/debug.js"></script>
+
+    <!-- Initialize the game -->
+    <script>
+      // Wait for all the scripts to load
+      window.addEventListener("load", function () {
+        console.log("All resources loaded, starting initialization...");
+        
+        // Check if all required Three.js components are loaded
+        if (typeof THREE === "undefined") {
+          document.getElementById("message").innerHTML =
+            "Error: Three.js not loaded";
+          return;
+        }
+
+        if (typeof Stats === "undefined") {
+          document.getElementById("message").innerHTML =
+            "Error: Stats not loaded";
+          return;
+        }
+
+        // Wait a short time to ensure all scripts have executed
+        setTimeout(function() {
+          // Check if our game objects are defined
+          if (typeof window.init !== "function") {
+            document.getElementById("message").innerHTML =
+              "Error: Game initialization function not found";
+            console.error("Game init function not found");
+            return;
+          }
+
+          // Initialize the game
+          try {
+            window.init();
+          } catch (error) {
+            console.error("Game initialization error:", error);
+            document.getElementById("message").innerHTML =
+              "Error initializing game: " + error.message;
+          }
+        }, 500); // Increased timeout to ensure scripts are fully loaded
+      });
+    </script>
+  </body>
+</html>
