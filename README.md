@@ -26,7 +26,8 @@ Adventure World is an immersive 3D exploration game built with Three.js. Navigat
 
 ### Option 1: Quick Start
 
-1. Download the latest release from the [releases page](https://github.com/yourusername/adventure-world/releases)
+1. Download the latest release from the [releases page](https://github.com/ShaharFullStack/frogHunter.git)
+OR Play the game here: https://shaharfullstack.github.io/frogHunter/
 2. Extract the ZIP file to a location of your choice
 3. Open `index.html` in your web browser
 
